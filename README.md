@@ -1,5 +1,7 @@
 # C Webserver Integrated Arduino Attendance Tracker
 
+![](../Diagram.PNG)
+
 ## Simple C Webserver Description:
 
 - Simple webserver written in C using socket interface
