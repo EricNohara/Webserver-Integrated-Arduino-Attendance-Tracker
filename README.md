@@ -1,4 +1,4 @@
-# C Webserver Integrated Arduino Attendance Metric Tracker
+# C Webserver Integrated Arduino Attendance Tracker
 
 # Simple C Webserver Description:
 
