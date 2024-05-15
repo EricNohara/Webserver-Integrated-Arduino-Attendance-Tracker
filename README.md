@@ -1,6 +1,6 @@
 # C Webserver Integrated Arduino Attendance Tracker
 
-# Simple C Webserver Description:
+## Simple C Webserver Description:
 
 - Simple webserver written in C using socket interface
 - Handles HTTP GET requests which handles serving static and dynamically generated files
@@ -9,7 +9,7 @@
 - Optional threaded mode which uses a thread library implemented from scratch
 - Optional cached mode which allows caching of static files
 
-# Important Webserver Notes:
+### Important Webserver Notes:
 
 - Machine Specifications: x86_64 GNU/Linux, gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04)
 - Must set environment variable absolute path to directory of webserver
@@ -45,7 +45,7 @@ make webserv
 - If on Macos, you may need to include the following definition in the relevant C files
 - #define \_POSIX_C_SOURCE 200809L
 
-## Multi Threaded Web Server
+### Multi Threaded Web Server
 
 - Implemented using setjmp, longjmp to change contexts, and sigaltstack to create alternate stacks for each thread
 - Add -t flag to indicate whether the server is to be ran as a multi threaded process or not
@@ -54,7 +54,7 @@ make webserv
 ./webserv -p port-number [-t] [-c cache-size]
 ```
 
-## Cached Weserver
+### Cached Weserver
 
 - Add -c flag along with cache size to indicate whether the server is to be ran with a cache or not
 
@@ -67,13 +67,13 @@ make webserv
 - If the port number is not specified, the program assumes the remote server uses port 80. You can also use the host name instead of the ip address.
 - http://localhost:port-number/wireshark-labs/INTRO-wireshark-file1.html?server=gaia.cs.umass.edu
 
-# Arduino Driven Attendance Metric Tracker Details
+## Arduino Driven Attendance Metric Tracker Details
 
 - Use 2 IR sensors, one on each side of an open doorway
 - If sensor 1 then sensor 2 detects, someone entered, and if opposite, someone exited
 - Tracks direction of entering/exiting people and updates running attendance total accordingly
 
-## Interaction with Webserver
+### Interaction with Webserver
 
 - Connection via serial communication
 - Device configuration, allowing customization of sensor distance, delay between entrances/exits, and starting total
