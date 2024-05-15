@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure Arduino</title>
+    <base href="/static/">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+        header {
+            background-color: #746862;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .ppt {
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .button-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        footer {
+            background-color: #1E1E1E;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 30px !important;
+            letter-spacing: 1px;
+        }
+        a {
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        #start-btn {
+            border-radius: 3px;
+            border: none;
+            font-size: 22px;
+            height: 40px;
+            margin-left: 20px;
+            background-color: #b8a79d;
+            padding-left: 20px;
+            padding-right: 20px;
+            cursor: pointer;
+            align-self: center;
+            justify-self: center;
+        }
+        #start-btn:hover {
+            background-color: #746862;
+            color: white;
+        }
+        #buttonForm {
+            display: grid;
+            height: 300px;
+        }
+        input[type='number'] {            
+            padding: 14px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            height: 18px;
+            margin-bottom: 4px;
+            font-size: 16px;
+            align-self: center;
+            justify-self: center;
+          }
+          input[type='number']:hover {
+              background-color : #c6c6c6;
+          }
+          h2 {
+            text-align: center;
+            padding: 20px;
+            color: rgb(82, 82, 82);
+          }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Configure Arduino for Attendance Tracking</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="contributors.html">Contributors</a></li>
+                <li><a href="project.html">Project</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h2>Input Settings or Leave Blank to Use Defaults</h2>
+    <div class="button-div">
+        <form id="buttonForm">
+            <input type='number' id='rangeInput' placeholder='Default range: 35 cm'>
+            <input type='number' id='delayInput' placeholder='Default delay: 750 milliseconds'>
+            <input type='number' id='totalInput' placeholder='Default starting total: 0'>          
+            <input type="button" id="start-btn" value="Configure Settings">
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2024 Our Website, Inc.</p>
+    </footer>
+</body>
+<script>
+    document.getElementById('start-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        const inputted_range = document.getElementById('rangeInput').value.trim();
+        const inputted_delay = document.getElementById('delayInput').value.trim();
+        const inputted_total = document.getElementById('totalInput').value.trim();
+
+        const range = inputted_range === "" ? 35 : parseInt(inputted_range);
+        const delay = inputted_delay === "" ? 750 : parseInt(inputted_delay);
+        const total = inputted_total === "" ? 0 : parseInt(inputted_total);
+
+        if (range < 1 || range > 400) {
+            alert("Invalid range input.\nRange must be between 1 and 400!")
+            return;
+        }
+
+        if (delay < 0) {
+            alert("Invalid delay input.\nDelay must be at least 0 milliseconds!")
+            return;
+        }
+
+        if (total < 0) {
+            alert("Invalid total input.\nTotal must be at least 0!")
+            return;
+        }
+
+        window.location.href = `../cgi-bin/handle_arduino_config.cgi?range=${range}&delay=${delay}&total=${total}`;
+    })
+</script>
+</html>

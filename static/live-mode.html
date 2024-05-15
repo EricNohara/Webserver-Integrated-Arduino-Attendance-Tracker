@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Mode</title>
+    <style>
+        #title {
+            color: #1B4F72;
+            text-align: center;
+            font-size: 35px;
+        }
+        #data {
+            text-align: center;
+        }
+        #plt {
+            width: 475px;
+        }
+        #container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        #return-btn {
+            font-size: 20px;
+            background-color: #2874A6;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            padding: 10px 30px;
+        }
+        #return-btn:hover {
+            background-color: #1B4F72;
+            cursor: pointer;
+        }
+        #content {
+            background-color: white;
+            width: 65%;
+            margin-top: 15px;
+            border: 10px solid #1B4F72;
+            border-radius: 10px;
+        }
+        body {
+            background-color: #D6EAF8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h1 id="title">Live Attendance Updates and Plotting</h1>
+        <h1 id="data">Fetching Data...</h1>
+        <div id="container">
+            <img src="live_plot.png?timestamp=<%= new Date().getTime() %>" alt="Attendance Live Plot" id="plt">
+        </div>
+        <div id="container">
+            <button id="return-btn" onclick="window.location.href='../cgi-bin/serial_com_html_res.cgi'">Return</button>
+        </div>
+    </div>
+</body>
+<script>
+    let lastData = "";
+
+    function loadDoc() {
+        const xhttp1 = new XMLHttpRequest();
+
+        xhttp1.onload = function() {
+            const newData = this.responseText.trim(); // Trim whitespace
+            if (newData !== lastData) {
+                document.getElementById("data").innerHTML = newData;
+                lastData = newData;
+                // Only fetch plot image if data is different
+                fetchPlotImage();
+            }
+        }
+
+        xhttp1.open("GET", "../cgi-bin/handle_live_data.cgi");
+        xhttp1.send();
+    }
+
+    function fetchPlotImage() {
+        const xhttp2 = new XMLHttpRequest();
+        xhttp2.onload = function() {
+            if (lastData !== "") { // Update plot only if data is not empty
+                document.getElementById("plt").src = "live_plot.png?timestamp=" + new Date().getTime();
+            }
+        }
+        xhttp2.open("GET", "live_plot.png");
+        xhttp2.send();
+    }
+    
+    setInterval(loadDoc, 2000); // set timeout for efficiency
+</script>
+</html>

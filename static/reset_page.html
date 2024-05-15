@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Arduino</title>
+    <base href="/static/">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+        .button-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .yes-btn {
+            background-color: #4CAF50;
+            margin-right: 40px;
+        }
+        .yes-btn:hover {
+            background-color: #45a049;
+        }
+        .no-btn {
+            background-color: #8B0000;
+            margin-left: 40px;
+        }
+        .no-btn:hover {
+            background-color: #5e0000;
+        }
+        .btn {
+            color: white;
+            border-radius: 3px;
+            border: none;
+            font-size: 22px;
+            height: 40px;
+            padding-left: 25px;
+            padding-right: 25px;
+            cursor: pointer;
+            align-self: center;
+            justify-self: center;
+        }
+        #buttonForm {
+            height: 300px;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 300px;
+            margin-bottom: 50px;
+            color: rgb(82, 82, 82);
+        }
+    </style>
+</head>
+<body>
+    <h2>Save data session for plotting? This will add the attendance data to the plot under this session.</h2>
+    <div class="button-div">
+        <form id="buttonForm">        
+            <input type="button" class="yes-btn btn" value="Yes" onclick="window.location.href='../cgi-bin/handle_reset.cgi?opt=True'">
+            <input type="button" class="no-btn btn" value="No" onclick="window.location.href='../cgi-bin/handle_reset.cgi?opt=False'">
+        </form>
+    </div>
+</body>
+</html>
