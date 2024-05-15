@@ -1,6 +1,6 @@
 # C Webserver Integrated Arduino Attendance Tracker
 
-![](../Diagram.PNG)
+<img width="393" alt="Diagram" src="https://github.com/EricNohara/Webserver-Integrated-Arduino-Attendance-Tracker/assets/123284198/33fcc5e1-feaa-48e1-a453-ddf2fcb4d7fa">
 
 ## Simple C Webserver Description:
 
