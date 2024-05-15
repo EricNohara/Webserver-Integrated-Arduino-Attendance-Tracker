@@ -1,102 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CS 410 Assignment 3: Project</title>
-    <base href="/static/">
+    <base href="/static/" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-            color: #333;
-        }
-        header {
-            background-color: #746862;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .ppt {
-            padding: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .button-div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        footer {
-            background-color: #1E1E1E;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        h1 {
-            margin-bottom: 30px !important;
-            letter-spacing: 1px;
-        }
-        a {
-            font-size: 18px;
-            letter-spacing: 1px;
-        }
-        #start-btn {
-            border-radius: 3px;
-            border: none;
-            font-size: 22px;
-            height: 40px;
-            margin-left: 20px;
-            background-color: #b8a79d;
-            padding-left: 20px;
-            padding-right: 20px;
-            cursor: pointer;
-        }
-        #start-btn:hover {
-            background-color: #746862;
-            color: white;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+        color: #333;
+      }
+      header {
+        background-color: #746862;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+      .button-div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      footer {
+        background-color: #1e1e1e;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+      h1 {
+        margin-bottom: 30px !important;
+        letter-spacing: 1px;
+      }
+      a {
+        font-size: 18px;
+        letter-spacing: 1px;
+      }
+      #start-btn {
+        border-radius: 3px;
+        border: none;
+        font-size: 22px;
+        height: 40px;
+        margin-left: 20px;
+        background-color: #b8a79d;
+        padding-left: 20px;
+        padding-right: 20px;
+        cursor: pointer;
+      }
+      #start-btn:hover {
+        background-color: #746862;
+        color: white;
+      }
+      #info {
+        margin: 40px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>CS 410 Assignment 3: Project</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="contributors.html">Contributors</a></li>
-            </ul>
-        </nav>
+      <h1>Webserver Integrated Arduino Attendance Metric Tracker</h1>
     </header>
-    <div class="ppt">
-        <iframe src="https://onedrive.live.com/embed?resid=6C3E229DF31E1F58%21215&amp;authkey=!AFL6a5FqfNvzVxk&amp;em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=0" width="478px" height="288px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
-    </div>
+    <section id="info">
+      <h2>About the Project</h2>
+      <p>
+        This project utilizes two infrared (IR) sensors placed on each side of
+        an open doorway to detect the entry and exit of individuals from a room.
+        When sensor 1 pings followed by sensor 2 shortly after, this indicates
+        that someone entered a room, and when sensor 2 pings before sensor 1,
+        this indicates that someone left the room. The Arduino microcontroller
+        keeps track of the number of people entering and exiting the room,
+        maintaining a running total, and updating this value within our web
+        server. A client GET request for this data will send it to the client
+        and to a specified email.
+      </p>
+      <h2>Key Features</h2>
+      <ul>
+        <li>Two IR sensors for accurate detection</li>
+        <li>
+          Arduino microcontroller tracking number of people entering/exiting
+        </li>
+        <li>Web server integration for updating the running total</li>
+        <li>GET request to retrieve the current total</li>
+        <li>ESMTP integration with Arduino and web server</li>
+      </ul>
+    </section>
     <div class="button-div">
-        <form id="buttonForm">
-            <input type="button" id="start-btn" value="Configure Arduino" onclick="window.location.href = 'configure_arduino.html'">
-        </form>
+      <form id="buttonForm">
+        <input
+          type="button"
+          id="start-btn"
+          value="Configure Arduino"
+          onclick="window.location.href = 'configure_arduino.html'"
+        />
+      </form>
     </div>
     <footer>
-        <p>&copy; 2024 Our Website, Inc.</p>
+      <p>&copy; Eric Nohara-LeClair</p>
     </footer>
-</body>
+  </body>
 </html>

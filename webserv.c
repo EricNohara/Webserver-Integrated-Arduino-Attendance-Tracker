@@ -1,8 +1,10 @@
 #define _XOPEN_SOURCE 500 // required for sigaltstack and stack_t
 
+#include "cache.h"
 #include "my_threads.h"
 #include <arpa/inet.h>
 #include <assert.h>
+#include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -21,8 +23,6 @@
 #include <sys/uio.h> // Needed for sendfile on macOS
 #include <time.h>
 #include <unistd.h>
-#include <ctype.h>
-#include "howell_cache.h"
 
 #define BUFFER_SIZE 4096
 #define EOL "\r\n"
@@ -493,29 +493,28 @@ jump:
     close(client_fd);
 }
 
-
-int check_cache(Cache* cache, int client_fd, char* content_type, char* resource, char* query, char* short_file_path){
-    //Check Cache
+int check_cache(Cache* cache, int client_fd, char* content_type, char* resource, char* query, char* short_file_path)
+{
+    // Check Cache
     sem_wait(cache->mutex);
 
     CacheEntry* entry = fetch_file(cache, resource, query, short_file_path);
-    if(entry != NULL){
+    if (entry != NULL) {
         send_http_res(client_fd, "HTTP/1.1 200 OK\r\n");
         send_http_res(client_fd, content_type);
 
         char buffer[BUFFER_SIZE];
         ssize_t bytes_read, bytes_written, total_bytes_written = 0;
         int count = 0;
-        while (count*BUFFER_SIZE < entry->size) {
+        while (count * BUFFER_SIZE < entry->size) {
 
-            if(BUFFER_SIZE < entry->size - count*BUFFER_SIZE){
+            if (BUFFER_SIZE < entry->size - count * BUFFER_SIZE) {
                 bytes_read = BUFFER_SIZE;
-            }
-            else{
-                bytes_read = entry->size - count*BUFFER_SIZE;
+            } else {
+                bytes_read = entry->size - count * BUFFER_SIZE;
             }
 
-            memcpy(buffer, entry->content + count*BUFFER_SIZE, BUFFER_SIZE);
+            memcpy(buffer, entry->content + count * BUFFER_SIZE, BUFFER_SIZE);
 
             bytes_written = write(client_fd, buffer, bytes_read);
             if (bytes_written <= 0) {
@@ -562,12 +561,10 @@ int handle_client_req(int client_fd)
             generate_dir_listing(resource, client_fd); // generate and send directory listing to client
             return 0;
         }
-    } 
-    else if (query[0] == '\0'){
+    } else if (query[0] == '\0') {
         send_404(client_fd);
         return -1;
     }
-    
 
     // Check if the requested file extension corresponds to a supported MIME type
     char* ext = strrchr(resource, '.');
@@ -585,10 +582,9 @@ int handle_client_req(int client_fd)
     char content_type[50];
     sprintf(content_type, "Content-Type: %s\r\n\r\n", mime_type);
 
-
-    if(is_cached == 1){
+    if (is_cached == 1) {
         int valid = check_cache(global_cache, client_fd, content_type, resource, query, requested_resource);
-        if(valid == 0){
+        if (valid == 0) {
             return 0;
         }
     }
@@ -633,10 +629,8 @@ int main(int argc, char* argv[])
     char* cache_size_str = NULL;
     int is_threaded = 0;
 
-    while((c = getopt(argc, argv, "p:c:t")) != -1)
-    {
-        switch (c)
-        {
+    while ((c = getopt(argc, argv, "p:c:t")) != -1) {
+        switch (c) {
         case 'p':
             port_str = optarg;
             break;
@@ -647,17 +641,17 @@ int main(int argc, char* argv[])
         case 't':
             is_threaded = 1;
             break;
-            
+
         case '?':
             if (optopt == 'c' || optopt == 'p')
                 printf("Option -%c requires an argument.\n", optopt);
-            else if (isprint (optopt))
+            else if (isprint(optopt))
                 printf("Unknown option `-%c'.\n", optopt);
             else
-                printf ("Unknown option character `\\x%x'.\n", optopt);
+                printf("Unknown option character `\\x%x'.\n", optopt);
             return 1;
         default:
-            abort ();
+            abort();
         }
     }
 
@@ -666,8 +660,7 @@ int main(int argc, char* argv[])
     if (port_num >= 65536 || port_num < 5000) // validate port number
         error("Error: invalid port number, must be in the range 5000-65536");
 
-
-    if(cache_size_str != NULL){
+    if (cache_size_str != NULL) {
         int cache_size = atoi(cache_size_str);
         if (cache_size > CACHE_SIZE_MAX || port_num < CACHE_SIZE_MIN) // validate port number
             error("Error: invalid cache size number, must be in the range 4096-2097152");
